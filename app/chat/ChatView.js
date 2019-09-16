@@ -495,7 +495,14 @@ class ChatWindow extends PureComponent {
   }
 
   _changeText (e) {
+    // 1. 监听到输入的是 @，调用 this.props.onInputAt()，在 onInput 中跳转到新页面
     this.setState({ messageContent: e })
+  }
+
+  _onMention (memberName) {
+    // this.state.messageContent
+    // 通过ref调用，当在新页面点击要@的人时触发
+    this.setState({messageContent: memberName})
   }
 
   _onContentSizeChange (e) {
