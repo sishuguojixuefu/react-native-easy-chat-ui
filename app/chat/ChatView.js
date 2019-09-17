@@ -29,6 +29,7 @@ const ViewPropTypes = RNViewPropTypes || View.propTypes
 class ChatWindow extends PureComponent {
   static propTypes = {
     /* defaultProps */
+    onInputAt: PropTypes.func,
     messageList: PropTypes.array.isRequired,
     inverted: PropTypes.bool,
     lastReadAt: PropTypes.object,
@@ -494,15 +495,64 @@ class ChatWindow extends PureComponent {
     }
   }
 
-  _changeText (e) {
+  _changeText = (text) => {
+    const inputRef = this.InputBar.input;
     // 1. 监听到输入的是 @，调用 this.props.onInputAt()，在 onInput 中跳转到新页面
-    this.setState({ messageContent: e })
+    const inputValue = this.state.messageContent;
+    const cursor = inputRef._lastNativeSelection? inputRef._lastNativeSelection.end : 0;
+    const isAdd = text.length > inputValue.length;
+    if (isAdd && text.charAt(cursor) === '@') {
+      this.props.onInputAt()
+      return;
+    }
+    if (!isAdd && inputValue.charAt(cursor - 1) === '\u00a0') {
+      const index = inputValue.slice(0, cursor).match(/@[^@\u00a0]*\u00a0$/)
+        .index;
+      const spliceStr = inputValue.slice(0, index) + inputValue.slice(cursor);
+      this.setState({
+        messageContent: spliceStr,
+      },()=>{
+        setTimeout(() => {
+          inputRef.setNativeProps({
+            selection: {
+              start: index,
+              end: index,
+            },
+          });
+        }, 0);
+      });
+      return;
+    }
+    inputRef.setNativeProps({
+      selection: {},
+    });
+    this.setState({
+      messageContent: text,
+    });
   }
 
-  _onMention (memberName) {
+  _onMention = (memberName) => {
     // this.state.messageContent
     // 通过ref调用，当在新页面点击要@的人时触发
-    this.setState({messageContent: memberName})
+    const inputRef = this.InputBar.input;
+    const inputValue = this.state.messageContent;
+    const cursor = inputRef._lastNativeSelection? inputRef._lastNativeSelection.end-1 : 0;
+    const spliceStr =`${inputValue.slice(0, cursor)}@${memberName}\u00a0${inputValue.slice(cursor)}`
+    this.setState({
+      messageContent: spliceStr,
+    },()=>{
+        setTimeout(() => {
+          inputRef.focus()
+          let number = cursor + memberName.length + 2
+          inputRef.setNativeProps({
+            selection: {
+              start: number,
+              end: number,
+            },
+          });
+        }, 0);
+    });
+
   }
 
   _onContentSizeChange (e) {
