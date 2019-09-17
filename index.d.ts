@@ -74,6 +74,10 @@ export interface MessagePorpsType {
 // 消息属性
 export interface ChatScreenPropsType {
   /**
+   * input输入@ 时处理
+   */
+  onInputAt:()=>void
+  /**
    * 消息列表
    */
   messageList: MessagePorpsType[]
