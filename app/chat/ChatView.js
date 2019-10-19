@@ -496,16 +496,17 @@ class ChatWindow extends PureComponent {
   }
 
   _changeText = (text) => {
+    const {chatType} = this.props;
     const inputRef = this.InputBar.input;
     // 1. 监听到输入的是 @，调用 this.props.onInputAt()，在 onInput 中跳转到新页面
     const inputValue = this.state.messageContent;
     const cursor = inputRef._lastNativeSelection? inputRef._lastNativeSelection.end : 0;
     const isAdd = text.length > inputValue.length;
-    if (isAdd && text.charAt(cursor) === '@') {
+    if (chatType === 'group' &&　isAdd && text.charAt(cursor) === '@') {
       this.props.onInputAt()
       return;
     }
-    if (!isAdd && inputValue.charAt(cursor - 1) === '\u00a0') {
+    if (chatType === 'group' &&　!isAdd && inputValue.charAt(cursor - 1) === '\u00a0') {
       const index = inputValue.slice(0, cursor).match(/@[^@\u00a0]*\u00a0$/)
         .index;
       const spliceStr = inputValue.slice(0, index) + inputValue.slice(cursor);
