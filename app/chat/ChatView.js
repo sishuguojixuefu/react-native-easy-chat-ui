@@ -509,7 +509,7 @@ class ChatWindow extends PureComponent {
     }
     if (chatType === 'group' && !isAdd && inputValue.charAt(isIos ? cursor : cursor - 1) === '\u00a0') {
       const index = inputValue.slice(0, isIos ? cursor + 1 : cursor).match(/@[^@\u00a0]*\u00a0$/).index
-      const spliceStr = inputValue.slice(0, index) + inputValue.slice(cursor)
+      const spliceStr = inputValue.slice(0, index) + inputValue.slice(isIos ? cursor + 1 : cursor)
       this.setState(
         {
           messageContent: spliceStr,
