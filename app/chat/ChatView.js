@@ -495,19 +495,20 @@ class ChatWindow extends PureComponent {
     }
   }
 
-  _changeText = text => {
+    _changeText = text => {
+    const isIos = Platform.OS === 'ios'
     const { chatType } = this.props
     const inputRef = this.InputBar.input
     // 1. 监听到输入的是 @，调用 this.props.onInputAt()，在 onInput 中跳转到新页面
     const inputValue = this.state.messageContent
     const cursor = inputRef._lastNativeSelection ? inputRef._lastNativeSelection.end : 0
     const isAdd = text.length > inputValue.length
-    if (chatType === 'group' && isAdd && text.charAt(Platform.OS === 'ios' ? cursor - 1 : cursor) === '@') {
+    if (chatType === 'group' && isAdd && text.charAt(isIos ? cursor - 1 : cursor) === '@') {
       this.props.onInputAt()
       return
     }
-    if (chatType === 'group' && !isAdd && inputValue.charAt(cursor - 1) === '\u00a0') {
-      const index = inputValue.slice(0, cursor).match(/@[^@\u00a0]*\u00a0$/).index
+    if (chatType === 'group' && !isAdd && inputValue.charAt(isIos ? cursor : cursor - 1) === '\u00a0') {
+      const index = inputValue.slice(0, isIos ? cursor + 1 : cursor).match(/@[^@\u00a0]*\u00a0$/).index
       const spliceStr = inputValue.slice(0, index) + inputValue.slice(cursor)
       this.setState(
         {
@@ -526,38 +527,45 @@ class ChatWindow extends PureComponent {
       )
       return
     }
-    if (Platform.OS === 'android') {
+    if (!isIos) {
       inputRef.setNativeProps({
         selection: {},
       })
     }
+
     this.setState({
       messageContent: text,
     })
   }
 
-  _onMention = (memberName) => {
-    // this.state.messageContent
+  _onMention = memberName => {
+    const isIos = Platform.OS === 'ios'
     // 通过ref调用，当在新页面点击要@的人时触发
-    const inputRef = this.InputBar.input;
-    const inputValue = this.state.messageContent;
-    const cursor = inputRef._lastNativeSelection? inputRef._lastNativeSelection.end-1 : 0;
-    const spliceStr =`${inputValue.slice(0, cursor)}@${memberName}\u00a0${inputValue.slice(cursor)}`
-    this.setState({
-      messageContent: spliceStr,
-    },()=>{
+    const inputRef = this.InputBar.input
+    const inputValue = this.state.messageContent
+    const cursor = inputRef._lastNativeSelection
+      ? isIos
+        ? inputRef._lastNativeSelection.end
+        : inputRef._lastNativeSelection.end - 1
+      : 0
+    const spliceStr = `${inputValue.slice(0, cursor)}@${memberName}\u00a0${inputValue.slice(cursor)}`
+    this.setState(
+      {
+        messageContent: spliceStr,
+      },
+      () => {
         setTimeout(() => {
           inputRef.focus()
-          let number = cursor + memberName.length + 2
+          let number = (isIos ? cursor - 1 : cursor) + memberName.length + 2
           inputRef.setNativeProps({
             selection: {
-              start: number,
-              end: number,
+              start: isIos ? number + 1 : number,
+              end: isIos ? number + 1 : number,
             },
-          });
-        }, 0);
-    });
-
+          })
+        }, 0)
+      }
+    )
   }
 
   _onContentSizeChange (e) {
