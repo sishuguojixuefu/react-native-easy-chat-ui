@@ -11,6 +11,7 @@ import TextMessage from './TextMessage'
 import ImageMessage from './ImageMessage'
 import VideoMessage from './VideoMessage'
 import VoiceMessage from './VoiceMessage'
+import NotificationMessage from './NotificationMessage'
 import { EMOJIS_DATA } from '../source/emojis'
 const { width } = Dimensions.get('window')
 
