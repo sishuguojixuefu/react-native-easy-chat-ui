@@ -244,6 +244,27 @@ export default class ChatItem extends PureComponent {
         } else {
           return this.props.renderSystemMessage({ isOpen, isSelf, message, index: parseInt(rowId) })
         }
+        case 'notification':
+        if (this.props.renderNotificationMessage === undefined) {
+          return (
+            <NotificationMessage
+              rightMessageBackground={this.props.rightMessageBackground}
+              leftMessageBackground={this.props.leftMessageBackground}
+              reSendMessage={reSendMessage}
+              isOpen={isOpen}
+              isSelf={isSelf}
+              messageErrorIcon={messageErrorIcon}
+              message={message}
+              onMessageLongPress={this.props.onMessageLongPress}
+              onMessagePress={this.props.onMessagePress}
+              rowId={this.props.rowId}
+              lastReadAt={this.props.lastReadAt}
+              chatType={this.props.chatType}
+            />
+          )
+        } else {
+          return this.props.renderNotificationMessage({ isOpen, isSelf, message, index: parseInt(rowId) })
+        }
     }
   }
 
@@ -319,7 +340,7 @@ export default class ChatItem extends PureComponent {
               }
               <View style={[
                   { justifyContent: showName && type === 'voice' ? 'flex-start' : 'center' },
-                  type === 'system' && { flex: 1 },
+                  (type === 'system'||type=== "notification") && { flex: 1 },
                 ]}>
                 {
                   showName && !isSelf? <Text style={[styles.userName, userNameStyle]}>{nickName}</Text>
