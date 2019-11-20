@@ -21,6 +21,12 @@ export interface VideoContentPropsType {
   height: number
 }
 
+export interface FileContentPropsType {
+  uri: string
+  name:string
+  size: string
+}
+
 export enum MsgType {
   text = 'text',
   image = 'image',
@@ -47,7 +53,7 @@ export interface MessagePorpsType {
   /**
    * 消息内容
    */
-  content: string | VoiceContentPropsType | ImageContentPropsType | VideoContentPropsType
+  content: string | VoiceContentPropsType | ImageContentPropsType | VideoContentPropsType | FileContentPropsType
 
   /**
    * 消息谁发的就是谁的用户ID

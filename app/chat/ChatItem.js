@@ -12,6 +12,7 @@ import ImageMessage from './ImageMessage'
 import VideoMessage from './VideoMessage'
 import VoiceMessage from './VoiceMessage'
 import NotificationMessage from './NotificationMessage'
+import FileMessage from './FileMessage'
 import { EMOJIS_DATA } from '../source/emojis'
 const { width } = Dimensions.get('window')
 
@@ -229,7 +230,22 @@ export default class ChatItem extends PureComponent {
         }
       case 'file':
         if (this.props.renderFileMessage === undefined) {
-          return null
+          return (
+            <FileMessage
+              rightMessageBackground={this.props.rightMessageBackground}
+              leftMessageBackground={this.props.leftMessageBackground}
+              reSendMessage={reSendMessage}
+              isOpen={isOpen}
+              isSelf={isSelf}
+              messageErrorIcon={messageErrorIcon}
+              message={message}
+              onMessageLongPress={this.props.onMessageLongPress}
+              onMessagePress={this.props.onMessagePress}
+              rowId={this.props.rowId}
+              lastReadAt={this.props.lastReadAt}
+              chatType={this.props.chatType}
+            />
+          )
         } else {
           return this.props.renderFileMessage({ isOpen, isSelf, message, index: parseInt(rowId) })
         }
@@ -341,7 +357,7 @@ export default class ChatItem extends PureComponent {
               }
               <View style={[
                   { justifyContent: showName && type === 'voice' ? 'flex-start' : 'center' },
-                  (type === 'system'||type=== "notification") && { flex: 1 },
+                  (type === 'system'||type=== "notification"||type=== "file") && { flex: 1 },
                 ]}>
                 {
                   showName && !isSelf? <Text style={[styles.userName, userNameStyle]}>{nickName}</Text>
