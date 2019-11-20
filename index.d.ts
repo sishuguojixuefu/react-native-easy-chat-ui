@@ -23,7 +23,7 @@ export interface VideoContentPropsType {
 
 export interface FileContentPropsType {
   uri: string
-  name:string
+  fileName:string
   size: string
 }
 

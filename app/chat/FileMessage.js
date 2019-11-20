@@ -12,6 +12,15 @@ import {
 import { changeEmojiText } from '@sishu/react-native-easy-chat-ui/app/chat/utils'
 const { width } = Dimensions.get('window')
 
+const getFileSize = size => {
+  const kb = size / 1024
+  const mb = kb / 1024
+  if (kb < 1024) {
+    return `${kb.toFixed(1)}K`
+  }
+  return `${mb.toFixed(1)}M`
+}
+
 const PATTERNS = {
   url: /(https?:\/\/|www\.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)/i,
   phone: /[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,7}/,
@@ -40,8 +49,8 @@ export default class TextMessage extends PureComponent {
           <View style={[styles.container, { backgroundColor: leftMessageBackground },isSelf?styles.marginSelf:styles.marginOther]}>
             <View style={{flexDirection:'row', flex:1, justifyContent:'space-between'}}>
               <View style={{flex:1,justifyContent:'space-between'}}>
-                <Text numberOfLines={1}>{message.content.name}</Text>
-                <Text>{message.content.size}</Text>
+                <Text numberOfLines={1}>{message.content.fileName}</Text>
+                <Text>{getFileSize(message.content.size)}</Text>
               </View>
               <Image style={{width:40,height:40}} source={require('./images/file.png')}/>
             </View>
