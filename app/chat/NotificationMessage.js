@@ -21,7 +21,6 @@ export default class NotificationMessage extends PureComponent {
         collapsable={false}
         ref={(e) => (this[`item_${this.props.rowId}`] = e)}
       >
-
         <TouchableOpacity
           style={{flex:1}}
           activeOpacity={1}
@@ -35,27 +34,6 @@ export default class NotificationMessage extends PureComponent {
             <Text>{message.content}</Text>
           </View>
         </TouchableOpacity>
-        <View style={{ alignItems: 'center', justifyContent: 'center', marginRight: 10}}>
-          {!isSelf
-            ? null
-            : message.sendStatus === undefined
-              ? null
-              : message.sendStatus === 0
-                ? <ActivityIndicator />
-                : message.sendStatus < 0
-                  ? <TouchableOpacity
-                    disabled={false}
-                    activeOpacity={0.7}
-                    onPress={() => {
-                      if (message.sendStatus === -2) {
-                        reSendMessage(message)
-                      }
-                    }}>
-                    {messageErrorIcon}
-                  </TouchableOpacity>
-                  : null
-          }
-        </View>
       </View>
     )
   }
@@ -65,7 +43,7 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     paddingHorizontal:10,
-    borderRadius: 12,
+    borderRadius: 5,
     paddingTop:10,
     paddingBottom:15,
     minHeight: 20,

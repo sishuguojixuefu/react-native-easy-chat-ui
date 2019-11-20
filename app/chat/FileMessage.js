@@ -61,7 +61,7 @@ export default class TextMessage extends PureComponent {
             </Text>
           )}
         </TouchableOpacity>
-        <View style={{ alignItems: 'center', justifyContent: 'center', marginRight: 10 }}>
+        <View style={{width:40, alignItems: 'center', justifyContent: 'center', marginRight: 10 }}>
           {!isSelf
             ? null
             : message.sendStatus === undefined
@@ -97,11 +97,9 @@ const styles = StyleSheet.create({
 
   marginSelf:{
     marginRight:11,
-    marginLeft:11,
   },
 
   marginOther:{
-    marginRight:11,
     marginLeft:11,
   },
 
