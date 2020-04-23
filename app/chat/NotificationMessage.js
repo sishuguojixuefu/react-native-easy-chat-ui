@@ -13,24 +13,27 @@ const { width } = Dimensions.get('window')
 
 
 export default class NotificationMessage extends PureComponent {
-  render () {
+  render() {
     const { isSelf, message, messageErrorIcon, isOpen, rightMessageBackground, leftMessageBackground, reSendMessage, chatType } = this.props
     return (
       <View
-        style={[isSelf ? styles.right : styles.left, {flex:1}]}
+        style={[isSelf ? styles.right : styles.left, { flex: 1 }]}
         collapsable={false}
         ref={(e) => (this[`item_${this.props.rowId}`] = e)}
       >
         <TouchableOpacity
-          style={{flex:1}}
+          style={{ flex: 1 }}
           activeOpacity={1}
           disabled={isOpen}
+          onLongPress={() => {
+            this.props.onMessageLongPress(this[`item_${this.props.rowId}`], 'notification', parseInt(this.props.rowId), '', message)
+          }}
           onPress={() => {
             this.props.onMessagePress('notification', parseInt(this.props.rowId), message)
           }}
         >
-          <View style={[styles.container, { backgroundColor: leftMessageBackground },isSelf?styles.marginSelf:styles.marginOther]}>
-            <Text style={{color:'#E7B05F',fontSize: 16, marginBottom:10}}>群公告</Text>
+          <View style={[styles.container, { backgroundColor: leftMessageBackground }, isSelf ? styles.marginSelf : styles.marginOther]}>
+            <Text style={{ color: '#E7B05F', fontSize: 16, marginBottom: 10 }}>群公告</Text>
             <Text>{message.content}</Text>
           </View>
         </TouchableOpacity>
@@ -41,22 +44,22 @@ export default class NotificationMessage extends PureComponent {
 const styles = StyleSheet.create({
 
   container: {
-    flex:1,
-    paddingHorizontal:10,
+    flex: 1,
+    paddingHorizontal: 10,
     borderRadius: 5,
-    paddingTop:10,
-    paddingBottom:15,
+    paddingTop: 10,
+    paddingBottom: 15,
     minHeight: 20,
   },
 
-  marginSelf:{
-    marginRight:11,
-    marginLeft:50,
+  marginSelf: {
+    marginRight: 11,
+    marginLeft: 50,
   },
 
-  marginOther:{
-    marginRight:50,
-    marginLeft:11,
+  marginOther: {
+    marginRight: 50,
+    marginLeft: 11,
   },
 
   subEmojiStyle: {
