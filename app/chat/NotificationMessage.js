@@ -6,7 +6,8 @@ import {
   Platform,
   StyleSheet,
   Dimensions,
-  Text
+  Text,
+  Image
 } from 'react-native'
 import { changeEmojiText } from '@sishu/react-native-easy-chat-ui/app/chat/utils'
 const { width } = Dimensions.get('window')
