@@ -37,8 +37,9 @@ export default class NotificationMessage extends PureComponent {
             <View style={{ flexDirection: 'row' }}>
               <Image style={{ width: 20, height: 20, marginRight: 10 }} source={require('./images/notice.png')}></Image><Text style={{ color: '#FF5656', fontSize: 16, marginBottom: 10 }}>群公告</Text>
             </View>
-            <Text style={{ lineHeight: 20 }} numberOfLines={3}>@所有人 {message.content}</Text>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 12 }}><Text style={{ color: '9b9b9b', fontSize: 14 }}>查看详情</Text><Image style={{ width: 14, height: 14, marginRight: 10 }} source={require('./images/arrow.png')}></Image></View>
+            <Text style={{ lineHeight: 20, color: '#4a4a4a', fontSize: 15 }} >@所有人</Text>
+            <Text style={{ lineHeight: 20, color: '#4a4a4a', fontSize: 15 }} numberOfLines={3}>{message.content}</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 12 }}><Text style={{ color: '9b9b9b', fontSize: 12 }}>查看详情</Text><Image style={{ width: 12, height: 12, marginRight: 10 }} source={require('./images/arrow.png')}></Image></View>
           </View>
         </TouchableOpacity>
       </View>
