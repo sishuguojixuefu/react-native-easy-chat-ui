@@ -1,6 +1,6 @@
 import ChatView from './app/chat/ChatView'
 import { EMOJIS_DATA } from './app/source/emojis/index'
-import { ViewStyle } from 'react-native'
+import { ViewStyle ,StyleProp,TextStyle} from 'react-native'
 import { PureComponent } from 'react'
 
 export interface VoiceContentPropsType {
@@ -448,6 +448,14 @@ export interface ChatScreenPropsType {
    * 自定义系统消息
    */
   renderSystemMessage?: (data: any) => JSX.Element
+  /**
+   * 左侧消息样式
+   */
+  leftMessageTextStyle?: StyleProp<TextStyle>
+  /**
+   * 右边侧消息样式
+   */
+  rightMessageTextStyle?: StyleProp<TextStyle>
 }
 
 export class ChatScreen extends PureComponent<ChatScreenPropsType, any> {
