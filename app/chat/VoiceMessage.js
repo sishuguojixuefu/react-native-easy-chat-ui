@@ -59,8 +59,8 @@ export default class VoiceMessage extends PureComponent {
             }
             resizeMode={"cover"}
             style={{
-              width: 26,
-              height: 26,
+              width: 20,
+              height: 20,
               transform: [{ rotate: "180deg" }],
             }}
           />
@@ -81,8 +81,8 @@ export default class VoiceMessage extends PureComponent {
             }
             resizeMode={"cover"}
             style={{
-              width: 26,
-              height: 26,
+              width: 20,
+              height: 20,
             }}
           />
         );

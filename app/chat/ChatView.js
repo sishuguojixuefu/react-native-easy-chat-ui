@@ -215,7 +215,7 @@ class ChatWindow extends PureComponent {
         <View
           style={{
             backgroundColor: "#fff",
-            borderRadius: 8,
+            borderRadius: 13,
             padding: 15,
             borderColor: "#ccc",
             borderWidth: 0,
@@ -223,7 +223,7 @@ class ChatWindow extends PureComponent {
         >
           {data.icon}
         </View>
-        <Text style={{ color: "#7a7a7a", marginTop: 10 }}>{data.title}</Text>
+        <Text style={{ color: "rgba(108, 108, 108, 1)", marginTop: 5, fontSize: 12 }}>{data.title}</Text>
       </TouchableOpacity>
     ),
     onScroll: () => {},
@@ -272,7 +272,7 @@ class ChatWindow extends PureComponent {
       >
         <View
           style={{
-            backgroundColor: "#e6e6e6",
+            backgroundColor: "#D3DBE0",
             paddingVertical: 4,
             paddingHorizontal: 8,
             borderRadius: 16,

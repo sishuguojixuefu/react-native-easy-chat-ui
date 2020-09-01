@@ -172,7 +172,7 @@ export default class InputBar extends PureComponent {
                     },
                   ]}
                 >
-                  <Text style={{ fontSize: 16, fontWeight: "bold", color: "#555" }}>
+                  <Text style={{ fontSize: 16, fontWeight: "normal", color: "#555" }}>
                     {isVoiceEnd ? `${pressOutText}` : `${pressInText}`}
                   </Text>
                 </View>
@@ -191,7 +191,7 @@ export default class InputBar extends PureComponent {
                   blurOnSubmit={false}
                   editable={!enabled}
                   placeholder={placeholder}
-                  placeholderTextColor={"#5f5d70"}
+                  placeholderTextColor={"rgba(167, 167, 167, 1)"}
                   onContentSizeChange={onContentSizeChange}
                   underlineColorAndroid="transparent"
                   onChangeText={textChange}
