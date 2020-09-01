@@ -52,15 +52,16 @@ export default class VoiceMessage extends PureComponent {
           <Image
             source={
               progress === 0
-                ? require("../source/image/voiceRightOne.png")
+                ? require("../source/image/voiceLeftOne.png")
                 : progress === 1
-                ? require("../source/image/voiceRightTwo.png")
-                : require("../source/image/voiceRight.png")
+                ? require("../source/image/voiceLeftTwo.png")
+                : require("../source/image/voiceLeft.png")
             }
             resizeMode={"cover"}
             style={{
               width: 26,
               height: 26,
+              transform: [{ rotate: "180deg" }],
             }}
           />
         );
@@ -146,7 +147,7 @@ export default class VoiceMessage extends PureComponent {
           >
             <View
               style={[
-                { maxWidth: width - 160, alignItems: "center" },
+                { maxWidth: width - 112, alignItems: "center" },
                 { flexDirection: isSelf ? "row-reverse" : "row" },
               ]}
             >
@@ -155,7 +156,7 @@ export default class VoiceMessage extends PureComponent {
                 style={{
                   marginLeft: isSelf ? 8 + (message.content.length > 1 ? message.content.length * 2 : 0) : 0,
                   marginRight: isSelf ? 0 : 8 + (message.content.length > 1 ? message.content.length * 2 : 0),
-                  color: isSelf ? "#fff" : "#4a4a4a",
+                  color: isSelf ? "#4a4a4a" : "#4a4a4a",
                 }}
               >
                 {`${message.content.length}"`}
@@ -229,8 +230,8 @@ const styles = StyleSheet.create({
   voiceArea: {
     paddingVertical: 8,
     borderRadius: 12,
-    maxWidth: width - 160,
+    maxWidth: width - 112,
     justifyContent: "center",
-    minHeight: 30,
+    minHeight: 40,
   },
 });

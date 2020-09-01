@@ -105,10 +105,10 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 12,
     borderBottomLeftRadius: 12,
     borderBottomRightRadius: 12,
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    maxWidth: width - 160,
-    minHeight: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    maxWidth: width - 112,
+    minHeight: 40,
   },
 
   subEmojiStyle: {
