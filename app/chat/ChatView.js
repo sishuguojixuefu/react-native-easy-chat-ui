@@ -252,7 +252,7 @@ class ChatWindow extends PureComponent {
     popoverStyle: {
       backgroundColor: "#333",
     },
-    allPanelHeight: 200,
+    allPanelHeight: 230,
     loadHistory: () => {
       console.log("loadMore");
     },
