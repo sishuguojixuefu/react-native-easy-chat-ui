@@ -29,20 +29,21 @@
   },
   "homepage": "https://github.com/DaiYz/react-native-chat#readme",
   "peerDependencies": {
-    "react": "*",
     "prop-types": "*",
+    "react": "*",
     "react-native": "*"
   },
   "dependencies": {
+    "@react-native-community/viewpager": "^4.2.0",
     "moment": "^2.22.2"
   },
   "devDependencies": {
-    "react": "16.2.0",
-    "react-native": "0.52.2",
-    "prop-types": "15.6.2",
     "babel-jest": "23.6.0",
     "babel-preset-react-native": "4.0.1",
     "jest": "23.6.0",
+    "prop-types": "15.6.2",
+    "react": "16.2.0",
+    "react-native": "0.52.2",
     "react-test-renderer": "16.2.0"
   },
   "jest": {
