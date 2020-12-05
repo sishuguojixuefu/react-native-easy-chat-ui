@@ -527,6 +527,7 @@ class ChatWindow extends PureComponent {
     } else {
       this.chatList.scrollToOffset({ y: 0, animated: false });
     }
+    this.setState({inputChangeSize:0})
   };
 
   _changeMethod() {
