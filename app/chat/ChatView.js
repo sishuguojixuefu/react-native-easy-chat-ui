@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent } from "react"
 import {
   Text,
   View,
@@ -13,19 +13,19 @@ import {
   Dimensions,
   FlatList,
   ViewPropTypes as RNViewPropTypes,
-} from "react-native";
-import PropTypes from "prop-types";
-import { getCurrentTime, changeEmojiText, isIPhoneX } from "./utils";
-import Voice from "./VoiceView";
-import PopView from "./components/pop-view";
-import ChatItem from "./ChatItem";
-import { EMOJIS_ZH } from "../source/emojis";
-import EmojiPanel from "./emoji";
-import InputBar from "./InputBar";
-import PlusPanel from "./plus";
-import DelPanel from "./del";
-const { height, width } = Dimensions.get("window");
-const ViewPropTypes = RNViewPropTypes || View.propTypes;
+} from "react-native"
+import PropTypes from "prop-types"
+import { getCurrentTime, changeEmojiText, isIPhoneX } from "./utils"
+import Voice from "./VoiceView"
+import PopView from "./components/pop-view"
+import ChatItem from "./ChatItem"
+import { EMOJIS_ZH } from "../source/emojis"
+import EmojiPanel from "./emoji"
+import InputBar from "./InputBar"
+import PlusPanel from "./plus"
+import DelPanel from "./del"
+const { height, width } = Dimensions.get("window")
+const ViewPropTypes = RNViewPropTypes || View.propTypes
 class ChatWindow extends PureComponent {
   static propTypes = {
     /* defaultProps */
@@ -151,7 +151,7 @@ class ChatWindow extends PureComponent {
     /* delPanelProps */
     delPanelStyle: ViewPropTypes.style,
     delPanelButtonStyle: ViewPropTypes.style,
-  };
+  }
 
   static defaultProps = {
     renderLoadEarlier: () => null,
@@ -164,10 +164,10 @@ class ChatWindow extends PureComponent {
     showUserName: false,
     panelContainerStyle: {},
     sendMessage: (type, content, isInverted) => {
-      console.log(type, content, isInverted, "send");
+      console.log(type, content, isInverted, "send")
     },
     reSendMessage: (message) => {
-      console.log(message, "reSend");
+      console.log(message, "reSend")
     },
     leftMessageBackground: "#fff",
     rightMessageBackground: "#a0e75a",
@@ -188,14 +188,14 @@ class ChatWindow extends PureComponent {
         icon: <Image source={require("../source/image/photo.png")} style={{ width: 30, height: 30 }} />,
         title: "照片",
         onPress: () => {
-          console.log("takePhoto");
+          console.log("takePhoto")
         },
       },
       {
         icon: <Image source={require("../source/image/camera.png")} style={{ width: 30, height: 30 }} />,
         title: "拍照",
         onPress: () => {
-          console.log("takePhoto");
+          console.log("takePhoto")
         },
       },
     ],
@@ -244,9 +244,9 @@ class ChatWindow extends PureComponent {
             >
               <Text style={{ color: "#333", fontSize: 10 }}>好友关系异常，发送失败</Text>
             </View>
-          );
+          )
         default:
-          return null;
+          return null
       }
     },
     popoverStyle: {
@@ -254,13 +254,13 @@ class ChatWindow extends PureComponent {
     },
     allPanelHeight: 230,
     loadHistory: () => {
-      console.log("loadMore");
+      console.log("loadMore")
     },
     onMessagePress: (type, index, content, message) => {
-      console.log(type, index, content, message);
+      console.log(type, index, content, message)
     },
     onMessageLongPress: (type, index, content, message) => {
-      console.log("longPress", type, index, content, message);
+      console.log("longPress", type, index, content, message)
     },
     renderMessageTime: (time) => (
       <View
@@ -315,7 +315,7 @@ class ChatWindow extends PureComponent {
     },
     androidHeaderHeight: 66,
     pressAvatar: (isSelf, targetId) => {
-      console.log(isSelf, targetId);
+      console.log(isSelf, targetId)
     },
     emojiIcon: <Image source={require("../source/image/emoji.png")} style={{ width: 30, height: 30 }} />,
     messageSelectIcon: <Image source={require("../source/image/check.png")} style={{ width: 14, height: 14 }} />,
@@ -341,7 +341,7 @@ class ChatWindow extends PureComponent {
     ],
     voiceVolume: 10,
     delMessage: (content, isInverted) => {
-      console.log(content, isInverted);
+      console.log(content, isInverted)
     },
     audioPath: "",
     audioOnProgress: () => {},
@@ -367,29 +367,29 @@ class ChatWindow extends PureComponent {
     inputHeightFix: 0,
     containerBackgroundColor: "#f5f5f5",
     showsVerticalScrollIndicator: false,
-  };
+  }
 
   constructor(props) {
-    super(props);
-    const { androidHeaderHeight, chatType, iphoneXHeaderPadding, iphoneXBottomPadding } = props;
-    this.time = null;
-    this._userHasBeenInputed = false;
-    this.iosHeaderHeight = 64;
-    this.isIphoneX = isIPhoneX();
-    this.visibleHeight = new Animated.Value(0);
-    this.panelHeight = new Animated.Value(0);
-    this.leftHeight = new Animated.Value(0);
-    this.paddingHeight = new Animated.Value(0);
-    this.emojiHeight = new Animated.Value(0);
+    super(props)
+    const { androidHeaderHeight, chatType, iphoneXHeaderPadding, iphoneXBottomPadding } = props
+    this.time = null
+    this._userHasBeenInputed = false
+    this.iosHeaderHeight = 64
+    this.isIphoneX = isIPhoneX()
+    this.visibleHeight = new Animated.Value(0)
+    this.panelHeight = new Animated.Value(0)
+    this.leftHeight = new Animated.Value(0)
+    this.paddingHeight = new Animated.Value(0)
+    this.emojiHeight = new Animated.Value(0)
     this.HeaderHeight = this.isIphoneX
       ? iphoneXHeaderPadding + this.iosHeaderHeight
       : Platform.OS === "android"
       ? androidHeaderHeight
-      : this.iosHeaderHeight;
-    this.listHeight = height - this.HeaderHeight - 64;
-    this.isInverted = false;
-    this.rootHeight = 0;
-    this.androidHasAudioPermission = false;
+      : this.iosHeaderHeight
+    this.listHeight = height - this.HeaderHeight - 64
+    this.isInverted = false
+    this.rootHeight = 0
+    this.androidHasAudioPermission = false
     this.state = {
       messageContent: "",
       cursorIndex: 0,
@@ -419,155 +419,155 @@ class ChatWindow extends PureComponent {
       messageSelected: [],
       currentIndex: -1,
       pressIndex: -1,
-    };
+    }
   }
 
   async componentDidMount() {
-    Platform.OS === "ios" && this._willShow();
-    Platform.OS === "ios" && this._willHide();
-    Platform.OS === "android" && this._didShow();
-    Platform.OS === "android" && this._didHide();
+    Platform.OS === "ios" && this._willShow()
+    Platform.OS === "ios" && this._willHide()
+    Platform.OS === "android" && this._didShow()
+    Platform.OS === "android" && this._didHide()
   }
 
   componentWillUnmount() {
-    Platform.OS === "ios" && this._willRemove();
-    Platform.OS === "android" && this._didRemove();
-    this.time && clearTimeout(this.time);
+    Platform.OS === "ios" && this._willRemove()
+    Platform.OS === "android" && this._didRemove()
+    this.time && clearTimeout(this.time)
   }
 
   _willShow() {
     this.keyboardWillShowListener = Keyboard.addListener("keyboardWillShow", (e) => {
-      const { panelShow, emojiShow } = this.state;
+      const { panelShow, emojiShow } = this.state
       this.setState({
         keyboardHeight: e.endCoordinates.height,
         xHeight: 0,
         keyboardShow: true,
-      });
+      })
       Animated.timing(this.visibleHeight, {
         duration: e.duration,
         toValue: 1,
         easing: Easing.inOut(Easing.ease),
-      }).start();
+      }).start()
       if (emojiShow) {
-        return this.closeEmoji();
+        return this.closeEmoji()
       }
       if (panelShow) {
-        return this.closePanel();
+        return this.closePanel()
       }
-    });
+    })
   }
 
   _willHide() {
     this.keyboardWillHideListener = Keyboard.addListener("keyboardWillHide", (e) => {
-      const { emojiShow, panelShow } = this.state;
-      const { iphoneXBottomPadding } = this.props;
-      this.setState({ keyboardShow: false });
+      const { emojiShow, panelShow } = this.state
+      const { iphoneXBottomPadding } = this.props
+      this.setState({ keyboardShow: false })
       if (emojiShow) {
-        return this.showEmoji();
+        return this.showEmoji()
       }
       if (panelShow) {
-        return this.showPanel();
+        return this.showPanel()
       }
       Animated.timing(this.visibleHeight, {
         duration: e.duration,
         toValue: 0,
         easing: Easing.inOut(Easing.ease),
-      }).start();
-      this.setState({ xHeight: iphoneXBottomPadding });
-    });
+      }).start()
+      this.setState({ xHeight: iphoneXBottomPadding })
+    })
   }
 
   _didShow() {
     this.keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", (e) => {
-      this.setState({ keyboardShow: true });
+      this.setState({ keyboardShow: true })
       // if (panelShow) {
       //   return this.closePanel(true)
       // }
       // if (emojiShow) {
       //   return this.closeEmoji(true)
       // }
-    });
+    })
   }
 
   _didHide() {
     this.keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", (e) => {
-      const { emojiShow, panelShow } = this.state;
-      this.setState({ keyboardShow: false });
+      const { emojiShow, panelShow } = this.state
+      this.setState({ keyboardShow: false })
       if (emojiShow) {
-        return this.showEmoji();
+        return this.showEmoji()
       }
       if (panelShow) {
-        return this.showPanel();
+        return this.showPanel()
       }
-    });
+    })
   }
 
   _willRemove() {
-    this.keyboardWillShowListener.remove();
-    this.keyboardWillHideListener.remove();
+    this.keyboardWillShowListener.remove()
+    this.keyboardWillHideListener.remove()
   }
 
   _didRemove() {
-    this.keyboardDidShowListener.remove();
-    this.keyboardDidHideListener.remove();
+    this.keyboardDidShowListener.remove()
+    this.keyboardDidHideListener.remove()
   }
 
   _sendMessage = (type, messageContent) => {
-    const { inverted } = this.props;
-    this._userHasBeenInputed = true;
+    const { inverted } = this.props
+    this._userHasBeenInputed = true
     if (type === "text" && messageContent.trim().length !== 0) {
-      messageContent = changeEmojiText(this.state.messageContent).join("");
+      messageContent = changeEmojiText(this.state.messageContent).join("")
     }
-    this.props.sendMessage(type, messageContent, this.isInverted);
-    this.InputBar.input && this.InputBar.input.clear();
-    this.setState({ messageContent: "" });
+    this.props.sendMessage(type, messageContent, this.isInverted)
+    this.InputBar.input && this.InputBar.input.clear()
+    this.setState({ messageContent: "" })
     if (!inverted) {
-      this.time && clearTimeout(this.time);
+      this.time && clearTimeout(this.time)
       // this.time = setTimeout(() => { this.chatList && this.chatList.scrollToEnd({ animated: true }) }, 200)
     } else {
-      this.chatList.scrollToOffset({ y: 0, animated: false });
+      this.chatList.scrollToOffset({ y: 0, animated: false })
     }
-    this.setState({inputChangeSize:0})
-  };
+    this.setState({ inputChangeSize: 0 })
+  }
 
   _changeMethod() {
     this.setState({ showVoice: !this.state.showVoice }, async () => {
       if (Platform.OS === "android" && this.state.showVoice && !this.androidHasAudioPermission) {
-        const hasPermission = await this.props.checkPermission();
-        this.androidHasAudioPermission = hasPermission;
+        const hasPermission = await this.props.checkPermission()
+        this.androidHasAudioPermission = hasPermission
         if (!hasPermission) {
-          this.props.requestAndroidPermission();
+          this.props.requestAndroidPermission()
         }
       }
-    });
-    this.setState({ saveChangeSize: this.state.inputChangeSize });
-    this.time && clearTimeout(this.time);
-    this.time = setTimeout(() => this.InputBar.input && this.InputBar.input.focus(), 300);
+    })
+    this.setState({ saveChangeSize: this.state.inputChangeSize })
+    this.time && clearTimeout(this.time)
+    this.time = setTimeout(() => this.InputBar.input && this.InputBar.input.focus(), 300)
     if (!this.state.showVoice && this.state.panelShow) {
-      this.setState({ xHeight: this.props.iphoneXBottomPadding });
-      return this.closePanel(true);
+      this.setState({ xHeight: this.props.iphoneXBottomPadding })
+      return this.closePanel(true)
     }
     if (!this.state.showVoice && this.state.emojiShow) {
-      this.setState({ xHeight: this.props.iphoneXBottomPadding });
-      return this.closeEmoji(true);
+      this.setState({ xHeight: this.props.iphoneXBottomPadding })
+      return this.closeEmoji(true)
     }
   }
 
   _changeText = (text) => {
-    const isIos = Platform.OS === "ios";
-    const { chatType } = this.props;
-    const inputRef = this.InputBar.input;
+    const isIos = Platform.OS === "ios"
+    const { chatType } = this.props
+    const inputRef = this.InputBar.input
     // 1. 监听到输入的是 @，调用 this.props.onInputAt()，在 onInput 中跳转到新页面
-    const inputValue = this.state.messageContent;
-    const cursor = inputRef._lastNativeSelection ? inputRef._lastNativeSelection.end : 0;
-    const isAdd = text.length > inputValue.length;
+    const inputValue = this.state.messageContent
+    const cursor = inputRef._lastNativeSelection ? inputRef._lastNativeSelection.end : 0
+    const isAdd = text.length > inputValue.length
     if (chatType === "group" && isAdd && text.charAt(isIos ? cursor - 1 : cursor) === "@") {
-      this.props.onInputAt();
-      return;
+      this.props.onInputAt()
+      return
     }
     if (chatType === "group" && !isAdd && inputValue.charAt(isIos ? cursor : cursor - 1) === "\u00a0") {
-      const index = inputValue.slice(0, isIos ? cursor + 1 : cursor).match(/@[^@\u00a0]*\u00a0$/).index;
-      const spliceStr = inputValue.slice(0, index) + inputValue.slice(isIos ? cursor + 1 : cursor);
+      const index = inputValue.slice(0, isIos ? cursor + 1 : cursor).match(/@[^@\u00a0]*\u00a0$/).index
+      const spliceStr = inputValue.slice(0, index) + inputValue.slice(isIos ? cursor + 1 : cursor)
       this.setState(
         {
           messageContent: spliceStr,
@@ -579,84 +579,84 @@ class ChatWindow extends PureComponent {
                 start: index,
                 end: index,
               },
-            });
-          }, 0);
+            })
+          }, 0)
         }
-      );
-      return;
+      )
+      return
     }
     if (!isIos) {
       inputRef.setNativeProps({
         selection: {},
-      });
+      })
     }
 
     this.setState({
       messageContent: text,
-    });
-  };
+    })
+  }
 
   _onMention = (memberName) => {
-    const isIos = Platform.OS === "ios";
+    const isIos = Platform.OS === "ios"
     // 通过ref调用，当在新页面点击要@的人时触发
-    const inputRef = this.InputBar.input;
-    const inputValue = this.state.messageContent;
+    const inputRef = this.InputBar.input
+    const inputValue = this.state.messageContent
     const cursor = inputRef._lastNativeSelection
       ? isIos
         ? inputRef._lastNativeSelection.end
         : inputRef._lastNativeSelection.end - 1
-      : 0;
-    const spliceStr = `${inputValue.slice(0, cursor)}@${memberName}\u00a0${inputValue.slice(cursor)}`;
+      : 0
+    const spliceStr = `${inputValue.slice(0, cursor)}@${memberName}\u00a0${inputValue.slice(cursor)}`
     this.setState(
       {
         messageContent: spliceStr,
       },
       () => {
         setTimeout(() => {
-          inputRef.focus();
-          let number = (isIos ? cursor - 1 : cursor) + memberName.length + 2;
+          inputRef.focus()
+          let number = (isIos ? cursor - 1 : cursor) + memberName.length + 2
           inputRef.setNativeProps({
             selection: {
               start: isIos ? number + 1 : number,
               end: isIos ? number + 1 : number,
             },
-          });
-        }, 0);
+          })
+        }, 0)
       }
-    );
-  };
+    )
+  }
 
   _onContentSizeChange(e) {
-    const { inverted } = this.props;
-    const changeHeight = e.nativeEvent.contentSize.height;
-    if (changeHeight === 34) return;
-    this.setState({ inputChangeSize: changeHeight <= 70 ? changeHeight : 70 });
+    const { inverted } = this.props
+    const changeHeight = e.nativeEvent.contentSize.height
+    if (changeHeight === 34) return
+    this.setState({ inputChangeSize: changeHeight <= 70 ? changeHeight : 70 })
     if (!inverted) {
-      this.chatList && this.chatList.scrollToEnd({ animated: true });
+      this.chatList && this.chatList.scrollToEnd({ animated: true })
     }
   }
 
   _onVoiceStart = () => {
-    this.setState({ voiceEnd: true });
-    this.voice.show();
-  };
+    this.setState({ voiceEnd: true })
+    this.voice.show()
+  }
 
   _onVoiceEnd = () => {
-    this.voice.close();
-    this.setState({ voiceEnd: false });
-  };
+    this.voice.close()
+    this.setState({ voiceEnd: false })
+  }
 
   _PressAvatar = (isSelf, targetId) => {
-    const { pressAvatar } = this.props;
-    pressAvatar(isSelf, targetId);
-    this.closeAll();
-  };
+    const { pressAvatar } = this.props
+    pressAvatar(isSelf, targetId)
+    this.closeAll()
+  }
 
   _scrollToBottom(listHeightAndWidth) {
-    const { inverted } = this.props;
+    const { inverted } = this.props
     if (listHeightAndWidth !== undefined) {
-      const { contentHeight } = listHeightAndWidth;
-      this.isInverted = contentHeight > this.listHeight;
+      const { contentHeight } = listHeightAndWidth
+      this.isInverted = contentHeight > this.listHeight
     }
     if (!inverted) {
       setTimeout(
@@ -664,21 +664,21 @@ class ChatWindow extends PureComponent {
           this.chatList &&
             this.chatList.scrollToEnd({
               animated: this._userHasBeenInputed,
-            });
+            })
         },
         this._userHasBeenInputed ? 0 : 130
-      );
+      )
     }
   }
 
   _onFocus = () => {
     if (Platform.OS === "android") {
       this.closeAll(() => {
-        this.InputBar.input && this.InputBar.input.focus();
-      });
-      this.setState({ keyboardShow: true });
+        this.InputBar.input && this.InputBar.input.focus()
+      })
+      this.setState({ keyboardShow: true })
     }
-  };
+  }
 
   closePanel = (realClose = false, callback) => {
     Animated.parallel([
@@ -692,13 +692,13 @@ class ChatWindow extends PureComponent {
         easing: Easing.inOut(Easing.ease),
       }),
     ]).start(() => {
-      this.setState({ panelShow: false });
-      callback && callback();
-    });
-  };
+      this.setState({ panelShow: false })
+      callback && callback()
+    })
+  }
 
   showPanel = (callback) => {
-    this.setState({ xHeight: 0 });
+    this.setState({ xHeight: 0 })
     Animated.parallel([
       Animated.timing(Platform.OS === "ios" ? this.visibleHeight : this.paddingHeight, {
         duration: this.props.allPanelAnimateDuration,
@@ -710,55 +710,55 @@ class ChatWindow extends PureComponent {
         easing: Easing.inOut(Easing.ease),
       }),
     ]).start(() => {
-      callback && callback();
-      this.setState({ panelShow: true });
-    });
-  };
+      callback && callback()
+      this.setState({ panelShow: true })
+    })
+  }
 
   isShowPanel = () => {
-    const { keyboardShow, panelShow, emojiShow } = this.state;
+    const { keyboardShow, panelShow, emojiShow } = this.state
     if (Platform.OS === "ios") {
       if (panelShow) {
-        return this.InputBar.input && this.InputBar.input.focus();
+        return this.InputBar.input && this.InputBar.input.focus()
       } else {
         if (emojiShow) {
-          return this.closeEmoji(false, () => this.showPanel());
+          return this.closeEmoji(false, () => this.showPanel())
         }
         if (!keyboardShow) {
-          this.showPanel();
+          this.showPanel()
         } else {
           this.setState({
             keyboardShow: false,
             keyboardHeight: 0,
             xHeight: 0,
             panelShow: true,
-          });
-          this.InputBar.input && this.InputBar.input.blur();
+          })
+          this.InputBar.input && this.InputBar.input.blur()
         }
-        if (this.state.showVoice) this.setState({ showVoice: false });
+        if (this.state.showVoice) this.setState({ showVoice: false })
       }
     } else {
       if (panelShow) {
         return this.closePanel(true, () => {
-          this.InputBar.input && this.InputBar.input.focus();
-        });
+          this.InputBar.input && this.InputBar.input.focus()
+        })
       } else {
         if (emojiShow) {
-          return this.closeEmoji(false, () => this.showPanel());
+          return this.closeEmoji(false, () => this.showPanel())
         }
         if (!keyboardShow) {
-          this.showPanel();
+          this.showPanel()
         } else {
-          this.setState({ keyboardShow: false, panelShow: true });
-          this.InputBar.input && this.InputBar.input.blur();
+          this.setState({ keyboardShow: false, panelShow: true })
+          this.InputBar.input && this.InputBar.input.blur()
         }
-        if (this.state.showVoice) this.setState({ showVoice: false });
+        if (this.state.showVoice) this.setState({ showVoice: false })
       }
     }
-  };
+  }
 
   showEmoji = (callback) => {
-    this.setState({ xHeight: 0 });
+    this.setState({ xHeight: 0 })
     Animated.parallel([
       Animated.timing(Platform.OS === "ios" ? this.visibleHeight : this.paddingHeight, {
         duration: this.props.allPanelAnimateDuration,
@@ -770,10 +770,10 @@ class ChatWindow extends PureComponent {
         easing: Easing.inOut(Easing.ease),
       }),
     ]).start(() => {
-      this.setState({ emojiShow: true });
-      callback && callback();
-    });
-  };
+      this.setState({ emojiShow: true })
+      callback && callback()
+    })
+  }
 
   closeEmoji = (realClose = false, callback) => {
     Animated.parallel([
@@ -787,110 +787,110 @@ class ChatWindow extends PureComponent {
         easing: Easing.inOut(Easing.ease),
       }),
     ]).start(() => {
-      this.setState({ emojiShow: false });
-      callback && callback();
-    });
-  };
+      this.setState({ emojiShow: false })
+      callback && callback()
+    })
+  }
 
   tabEmoji = () => {
-    const { keyboardShow, emojiShow, panelShow } = this.state;
-    const { showVoice } = this.state;
+    const { keyboardShow, emojiShow, panelShow } = this.state
+    const { showVoice } = this.state
     if (Platform.OS === "ios") {
       if (emojiShow) {
-        return this.InputBar.input && this.InputBar.input.focus();
+        return this.InputBar.input && this.InputBar.input.focus()
       }
       if (panelShow) {
-        return this.closePanel(false, () => this.showEmoji());
+        return this.closePanel(false, () => this.showEmoji())
       }
       if (!keyboardShow) {
-        this.showEmoji();
+        this.showEmoji()
       } else {
         this.setState({
           keyboardShow: false,
           emojiShow: true,
           keyboardHeight: 0,
           xHeight: 0,
-        });
-        this.InputBar.input && this.InputBar.input.blur();
+        })
+        this.InputBar.input && this.InputBar.input.blur()
       }
-      if (showVoice) this.setState({ showVoice: false });
+      if (showVoice) this.setState({ showVoice: false })
     } else {
       if (emojiShow) {
-        return this.closeEmoji(true, () => this.InputBar.input && this.InputBar.input.focus());
+        return this.closeEmoji(true, () => this.InputBar.input && this.InputBar.input.focus())
       } else {
         if (panelShow) {
-          return this.closePanel(false, () => this.showEmoji());
+          return this.closePanel(false, () => this.showEmoji())
         }
         if (!keyboardShow) {
-          this.showEmoji();
+          this.showEmoji()
         } else {
           this.setState({
             keyboardShow: false,
             emojiShow: true,
-          });
-          this.InputBar.input && this.InputBar.input.blur();
+          })
+          this.InputBar.input && this.InputBar.input.blur()
         }
-        if (this.state.showVoice) this.setState({ showVoice: false });
+        if (this.state.showVoice) this.setState({ showVoice: false })
       }
     }
-  };
+  }
 
   selectMultiple = (isSelect, index, message) => {
-    let messageArr = this.state.messageSelected;
-    const existArr = messageArr.filter((item) => item.index === index);
+    let messageArr = this.state.messageSelected
+    const existArr = messageArr.filter((item) => item.index === index)
     if (existArr.length === 0) {
-      messageArr.push({ index, isSelect, message });
-      this.setState({ messageSelected: messageArr });
+      messageArr.push({ index, isSelect, message })
+      this.setState({ messageSelected: messageArr })
     } else {
-      const filterArr = messageArr.filter((item) => item.index !== index);
+      const filterArr = messageArr.filter((item) => item.index !== index)
       if (isSelect) {
-        filterArr.push({ index, isSelect, message });
+        filterArr.push({ index, isSelect, message })
       }
-      this.setState({ messageSelected: filterArr });
+      this.setState({ messageSelected: filterArr })
     }
-  };
+  }
 
   _closeMultipleSelect = () => {
-    this.setState({ selectMultiple: false });
+    this.setState({ selectMultiple: false })
     Animated.timing(this.leftHeight, {
       duration: 200,
       toValue: 0,
       easing: Easing.linear(),
-    }).start();
-  };
+    }).start()
+  }
 
   _openMultipleSelect = () => {
-    this.setState({ selectMultiple: true });
+    this.setState({ selectMultiple: true })
     Animated.timing(this.leftHeight, {
       duration: 200,
       toValue: 1,
       easing: Easing.linear(),
-    }).start();
-  };
+    }).start()
+  }
 
   show = (view, type, index, text, message) => {
     if (!this.props.usePopView) {
-      this.props.onMessageLongPress(type, index, text, message);
+      this.props.onMessageLongPress(type, index, text, message)
     } else {
       view.measure((x, y, width, height, pageX, pageY) => {
-        let items = null;
+        let items = null
         if (this.props.setPopItems) {
-          items = this.props.setPopItems(type, index, text, message);
+          items = this.props.setPopItems(type, index, text, message)
         } else {
           items = [
             {
               title: "删除",
               onPress: () => {
-                this.props.delMessage({ index, message }, this.isInverted);
+                this.props.delMessage({ index, message }, this.isInverted)
               },
             },
             {
               title: "多选",
               onPress: () => {
-                this.multipleSelect(index, message);
+                this.multipleSelect(index, message)
               },
             },
-          ];
+          ]
           if (type === "text") {
             items = [
               {
@@ -900,187 +900,187 @@ class ChatWindow extends PureComponent {
               {
                 title: "删除",
                 onPress: () => {
-                  this.props.delMessage({ index, message }, this.isInverted);
+                  this.props.delMessage({ index, message }, this.isInverted)
                 },
               },
               {
                 title: "多选",
                 onPress: () => {
-                  this.multipleSelect(index, message);
+                  this.multipleSelect(index, message)
                 },
               },
-            ];
+            ]
           }
         }
-        if (items === null) console.error("need to return items");
+        if (items === null) console.error("need to return items")
         if (items.length > 0) {
           PopView.show({ x: pageX, y: pageY, width, height }, items, {
             popoverStyle: this.props.popoverStyle,
-          });
+          })
         }
-      });
+      })
     }
-  };
+  }
 
   multipleSelect = (index, message) => {
-    this.closeAll();
-    Keyboard.dismiss();
-    this._openMultipleSelect();
-    this.props.changeHeaderLeft();
+    this.closeAll()
+    Keyboard.dismiss()
+    this._openMultipleSelect()
+    this.props.changeHeaderLeft()
     if (index !== undefined) {
-      this.state.messageSelected.length = 0;
+      this.state.messageSelected.length = 0
       this.setState({
         currentIndex: index,
-      });
-      this.state.messageSelected.push({ index, message, isSelect: true });
+      })
+      this.state.messageSelected.push({ index, message, isSelect: true })
     }
-  };
+  }
 
   changeVoiceStatus = (status) => {
-    this.setState({ isVoiceContinue: status });
-  };
+    this.setState({ isVoiceContinue: status })
+  }
 
   closeAll = (callback) => {
     if (this.state.panelShow) {
-      this.setState({ xHeight: this.props.iphoneXBottomPadding });
-      return this.closePanel(true, callback);
+      this.setState({ xHeight: this.props.iphoneXBottomPadding })
+      return this.closePanel(true, callback)
     }
     if (this.state.emojiShow) {
-      this.setState({ xHeight: this.props.iphoneXBottomPadding });
-      return this.closeEmoji(true, callback);
+      this.setState({ xHeight: this.props.iphoneXBottomPadding })
+      return this.closeEmoji(true, callback)
     }
-  };
+  }
 
   _loadHistory = async () => {
-    const { inverted } = this.props;
-    if (!inverted) return;
-    await this.props.loadHistory();
-  };
+    const { inverted } = this.props
+    if (!inverted) return
+    await this.props.loadHistory()
+  }
 
   _onEmojiSelected(code) {
-    let emojiReg = new RegExp("\\[[^\\]]+\\]", "g");
+    let emojiReg = new RegExp("\\[[^\\]]+\\]", "g")
     if (code === "") {
-      return;
+      return
     }
 
-    let lastText = "";
-    let currentTextLength = this.state.messageContent.length;
+    let lastText = ""
+    let currentTextLength = this.state.messageContent.length
 
     if (code === "/{del}") {
       // 删除键
       if (currentTextLength === 0) {
-        return;
+        return
       }
 
       if (this.state.cursorIndex < currentTextLength) {
         // 光标在字符串中间
-        let emojiIndex = this.state.messageContent.search(emojiReg); // 匹配到的第一个表情符位置
+        let emojiIndex = this.state.messageContent.search(emojiReg) // 匹配到的第一个表情符位置
 
         if (emojiIndex === -1) {
           // 没有匹配到表情符
-          let preStr = this.state.messageContent.substring(0, this.state.cursorIndex);
-          let nextStr = this.state.messageContent.substring(this.state.cursorIndex);
-          lastText = preStr.substring(0, preStr.length - 1) + nextStr;
+          let preStr = this.state.messageContent.substring(0, this.state.cursorIndex)
+          let nextStr = this.state.messageContent.substring(this.state.cursorIndex)
+          lastText = preStr.substring(0, preStr.length - 1) + nextStr
 
           this.setState({
             cursorIndex: preStr.length - 1,
-          });
+          })
         } else {
-          let preStr = this.state.messageContent.substring(0, this.state.cursorIndex);
-          let nextStr = this.state.messageContent.substring(this.state.cursorIndex);
+          let preStr = this.state.messageContent.substring(0, this.state.cursorIndex)
+          let nextStr = this.state.messageContent.substring(this.state.cursorIndex)
 
-          let lastChar = preStr.charAt(preStr.length - 1);
+          let lastChar = preStr.charAt(preStr.length - 1)
           if (lastChar === "]") {
-            let castArray = preStr.match(emojiReg);
+            let castArray = preStr.match(emojiReg)
 
             if (!castArray) {
-              let cast = castArray[castArray.length - 1];
+              let cast = castArray[castArray.length - 1]
 
-              lastText = preStr.substring(0, preStr.length - cast.length) + nextStr;
+              lastText = preStr.substring(0, preStr.length - cast.length) + nextStr
 
               this.setState({
                 cursorIndex: preStr.length - cast.length,
-              });
+              })
             } else {
-              lastText = preStr.substring(0, preStr.length - 1) + nextStr;
+              lastText = preStr.substring(0, preStr.length - 1) + nextStr
 
               this.setState({
                 cursorIndex: preStr.length - 1,
-              });
+              })
             }
           } else {
-            lastText = preStr.substring(0, preStr.length - 1) + nextStr;
+            lastText = preStr.substring(0, preStr.length - 1) + nextStr
             this.setState({
               cursorIndex: preStr.length - 1,
-            });
+            })
           }
         }
       } else {
         // 光标在字符串最后
-        let lastChar = this.state.messageContent.charAt(currentTextLength - 1);
+        let lastChar = this.state.messageContent.charAt(currentTextLength - 1)
         if (lastChar === "]") {
-          let castArray = this.state.messageContent.match(emojiReg);
+          let castArray = this.state.messageContent.match(emojiReg)
 
           if (castArray) {
-            let cast = castArray[castArray.length - 1];
-            lastText = this.state.messageContent.substring(0, this.state.messageContent.length - cast.length);
+            let cast = castArray[castArray.length - 1]
+            lastText = this.state.messageContent.substring(0, this.state.messageContent.length - cast.length)
 
             this.setState({
               cursorIndex: this.state.messageContent.length - cast.length,
-            });
+            })
           } else {
-            lastText = this.state.messageContent.substring(0, this.state.messageContent.length - 1);
+            lastText = this.state.messageContent.substring(0, this.state.messageContent.length - 1)
 
             this.setState({
               cursorIndex: this.state.messageContent.length - 1,
-            });
+            })
           }
         } else {
-          lastText = this.state.messageContent.substring(0, currentTextLength - 1);
+          lastText = this.state.messageContent.substring(0, currentTextLength - 1)
           this.setState({
             cursorIndex: currentTextLength - 1,
-          });
+          })
         }
       }
     } else {
       if (currentTextLength >= this.state.cursorIndex) {
-        lastText = this.state.messageContent + EMOJIS_ZH[code];
+        lastText = this.state.messageContent + EMOJIS_ZH[code]
 
         this.setState({
           cursorIndex: lastText.length,
-        });
+        })
       } else {
-        let preTemp = this.state.messageContent.substring(0, this.state.cursorIndex);
-        let nextTemp = this.state.messageContent.substring(this.state.cursorIndex, currentTextLength);
-        lastText = preTemp + EMOJIS_ZH[code] + nextTemp;
+        let preTemp = this.state.messageContent.substring(0, this.state.cursorIndex)
+        let nextTemp = this.state.messageContent.substring(this.state.cursorIndex, currentTextLength)
+        lastText = preTemp + EMOJIS_ZH[code] + nextTemp
 
         this.setState({
           cursorIndex: this.state.cursorIndex + EMOJIS_ZH[code].length,
-        });
+        })
       }
     }
     this.setState({
       messageContent: lastText,
-    });
+    })
   }
 
   savePressIndex = (id) => {
-    this.setState({ pressIndex: id });
-  };
+    this.setState({ pressIndex: id })
+  }
 
   renderBg = (bg) => {
-    const { renderChatBg } = this.props;
-    if (bg === null) return null;
+    const { renderChatBg } = this.props
+    if (bg === null) return null
     if (renderChatBg === undefined) {
-      const source = typeof bg === "number" ? bg : { uri: bg };
-      return <Image source={source} style={{ position: "absolute", width, top: 0, height }} resizeMode={"cover"} />;
+      const source = typeof bg === "number" ? bg : { uri: bg }
+      return <Image source={source} style={{ position: "absolute", width, top: 0, height }} resizeMode={"cover"} />
     } else {
-      return renderChatBg(bg);
+      return renderChatBg(bg)
     }
-  };
+  }
 
   render() {
-    const { messageList, allPanelHeight, inverted, chatBackgroundImage, chatType } = this.props;
+    const { messageList, allPanelHeight, inverted, chatBackgroundImage, chatType } = this.props
     const {
       messageContent,
       voiceEnd,
@@ -1089,8 +1089,8 @@ class ChatWindow extends PureComponent {
       xHeight,
       keyboardHeight,
       keyboardShow,
-    } = this.state;
-    const currentList = messageList.slice().sort((a, b) => (inverted ? b.time - a.time : a.time - b.time));
+    } = this.state
+    const currentList = messageList.slice().sort((a, b) => (inverted ? b.time - a.time : a.time - b.time))
     return (
       <View
         style={{
@@ -1134,7 +1134,7 @@ class ChatWindow extends PureComponent {
               extraData={this.props.extraData}
               automaticallyAdjustContentInsets={false}
               onScroll={(e) => {
-                this.props.onScroll(e);
+                this.props.onScroll(e)
               }}
               showsVerticalScrollIndicator={this.props.showsVerticalScrollIndicator}
               onEndReachedThreshold={this.props.onEndReachedThreshold}
@@ -1143,11 +1143,11 @@ class ChatWindow extends PureComponent {
               keyExtractor={(item) => `${item.id}`}
               onEndReached={() => this._loadHistory()}
               onLayout={(e) => {
-                this._scrollToBottom();
-                this.listHeight = e.nativeEvent.layout.height;
+                this._scrollToBottom()
+                this.listHeight = e.nativeEvent.layout.height
               }}
               onContentSizeChange={(contentWidth, contentHeight) => {
-                this._scrollToBottom({ contentWidth, contentHeight });
+                this._scrollToBottom({ contentWidth, contentHeight })
               }}
               renderItem={({ item, index }) => (
                 <ChatItem
@@ -1280,7 +1280,7 @@ class ChatWindow extends PureComponent {
               HeaderHeight={this.HeaderHeight}
               allPanelHeight={this.props.allPanelHeight}
               onPress={(item) => {
-                this._onEmojiSelected(item.value);
+                this._onEmojiSelected(item.value)
               }}
             />
           ) : null}
@@ -1315,8 +1315,8 @@ class ChatWindow extends PureComponent {
           ) : null}
         </Animated.View>
       </View>
-    );
+    )
   }
 }
 
-export default ChatWindow;
+export default ChatWindow
