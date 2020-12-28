@@ -556,18 +556,50 @@ class ChatWindow extends PureComponent {
     }
   }
 
-  selectionChange = (e) => {
+  iosSelectionChange = (selctionStart) => {
     const inputRef = this.InputBar.input
     if (this.optType === "add") {
+      if (this.newInputValue.charAt(selctionStart - 1) === "@") {
+        this.inputFocusIndex = selctionStart - 1
+        this.setState({ messageContent: this.oldInputValue })
+        this.props.onInputAt()
+      }
+    } else if (this.optType === "del") {
+      if (this.oldInputValue.charAt(selctionStart) === "\u00a0") {
+        const index = this.oldInputValue.slice(0, selctionStart + 1).match(/@[^@\u00a0]*\u00a0$/).index
+        const spliceStr = this.oldInputValue.slice(0, index) + this.oldInputValue.slice(selctionStart + 1)
+        this.setState(
+          {
+            messageContent: spliceStr,
+          },
+          () => {
+            setTimeout(() => {
+              inputRef.setNativeProps({
+                selection: {
+                  start: index,
+                  end: index,
+                },
+              })
+            }, 0)
+          }
+        )
+      }
+    }
+    this.optType = ""
+  }
+
+  selectionChange = (e) => {
+    const isIos = Platform.OS === "ios"
+    const inputRef = this.InputBar.input
+    isIos && (this.selctionStart = e.nativeEvent.selection.start)
+    if (this.optType === "add") {
       if (this.state.messageContent.charAt(e.nativeEvent.selection.start - 1) === "@") {
-        // console.log("e:add", JSON.stringify(e.nativeEvent))
         this.inputFocusIndex = e.nativeEvent.selection.start - 1
         this.setState({ messageContent: this.oldInputValue })
         this.props.onInputAt()
       }
     } else if (this.optType === "del") {
       if (this.oldInputValue.charAt(e.nativeEvent.selection.start) === "\u00a0") {
-        // console.log("e:del", JSON.stringify(e.nativeEvent))
         const index = this.oldInputValue.slice(0, e.nativeEvent.selection.start + 1).match(/@[^@\u00a0]*\u00a0$/).index
         const spliceStr =
           this.oldInputValue.slice(0, index) + this.oldInputValue.slice(e.nativeEvent.selection.start + 1)
@@ -613,6 +645,7 @@ class ChatWindow extends PureComponent {
     this.setState({
       messageContent: text,
     })
+    isIos && this.iosSelectionChange(this.selctionStart)
   }
 
   _onMention = (memberName) => {
