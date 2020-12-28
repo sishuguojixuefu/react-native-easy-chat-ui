@@ -390,6 +390,9 @@ class ChatWindow extends PureComponent {
     this.isInverted = false
     this.rootHeight = 0
     this.androidHasAudioPermission = false
+    this.optType = "" //操作类型 'add' 'del' 用于群聊@群成员
+    this.oldInputValue = "" //用于群聊@群成员
+    this.inputFocusIndex = 0 //用于群聊@群成员
     this.state = {
       messageContent: "",
       cursorIndex: 0,
@@ -553,44 +556,60 @@ class ChatWindow extends PureComponent {
     }
   }
 
+  selectionChange = (e) => {
+    const inputRef = this.InputBar.input
+    if (this.optType === "add") {
+      if (this.state.messageContent.charAt(e.nativeEvent.selection.start - 1) === "@") {
+        // console.log("e:add", JSON.stringify(e.nativeEvent))
+        this.inputFocusIndex = e.nativeEvent.selection.start - 1
+        this.setState({ messageContent: this.oldInputValue })
+        this.props.onInputAt()
+      }
+    } else if (this.optType === "del") {
+      if (this.oldInputValue.charAt(e.nativeEvent.selection.start) === "\u00a0") {
+        // console.log("e:del", JSON.stringify(e.nativeEvent))
+        const index = this.oldInputValue.slice(0, e.nativeEvent.selection.start + 1).match(/@[^@\u00a0]*\u00a0$/).index
+        const spliceStr =
+          this.oldInputValue.slice(0, index) + this.oldInputValue.slice(e.nativeEvent.selection.start + 1)
+        this.setState(
+          {
+            messageContent: spliceStr,
+          },
+          () => {
+            setTimeout(() => {
+              inputRef.setNativeProps({
+                selection: {
+                  start: index,
+                  end: index,
+                },
+              })
+            }, 0)
+          }
+        )
+      }
+    }
+    this.optType = ""
+  }
+
   _changeText = (text) => {
     const isIos = Platform.OS === "ios"
     const { chatType } = this.props
     const inputRef = this.InputBar.input
     // 1. 监听到输入的是 @，调用 this.props.onInputAt()，在 onInput 中跳转到新页面
     const inputValue = this.state.messageContent
-    const cursor = inputRef._lastNativeSelection ? inputRef._lastNativeSelection.end : 0
+    this.oldInputValue = inputValue
     const isAdd = text.length > inputValue.length
-    if (chatType === "group" && isAdd && text.charAt(isIos ? cursor - 1 : cursor) === "@") {
-      this.props.onInputAt()
-      return
+    if (chatType === "group" && isAdd) {
+      this.optType = "add"
     }
-    if (chatType === "group" && !isAdd && inputValue.charAt(isIos ? cursor : cursor - 1) === "\u00a0") {
-      const index = inputValue.slice(0, isIos ? cursor + 1 : cursor).match(/@[^@\u00a0]*\u00a0$/).index
-      const spliceStr = inputValue.slice(0, index) + inputValue.slice(isIos ? cursor + 1 : cursor)
-      this.setState(
-        {
-          messageContent: spliceStr,
-        },
-        () => {
-          setTimeout(() => {
-            inputRef.setNativeProps({
-              selection: {
-                start: index,
-                end: index,
-              },
-            })
-          }, 0)
-        }
-      )
-      return
+    if (chatType === "group" && !isAdd) {
+      this.optType = "del"
     }
     if (!isIos) {
       inputRef.setNativeProps({
         selection: {},
       })
     }
-
     this.setState({
       messageContent: text,
     })
@@ -601,11 +620,7 @@ class ChatWindow extends PureComponent {
     // 通过ref调用，当在新页面点击要@的人时触发
     const inputRef = this.InputBar.input
     const inputValue = this.state.messageContent
-    const cursor = inputRef._lastNativeSelection
-      ? isIos
-        ? inputRef._lastNativeSelection.end
-        : inputRef._lastNativeSelection.end - 1
-      : 0
+    const cursor = this.inputFocusIndex
     const spliceStr = `${inputValue.slice(0, cursor)}@${memberName}\u00a0${inputValue.slice(cursor)}`
     this.setState(
       {
@@ -614,11 +629,11 @@ class ChatWindow extends PureComponent {
       () => {
         setTimeout(() => {
           inputRef.focus()
-          let number = (isIos ? cursor - 1 : cursor) + memberName.length + 2
+          let number = memberName.length + 2
           inputRef.setNativeProps({
             selection: {
-              start: isIos ? number + 1 : number,
-              end: isIos ? number + 1 : number,
+              start: number + cursor,
+              end: number + cursor,
             },
           })
         }, 0)
@@ -1220,6 +1235,7 @@ class ChatWindow extends PureComponent {
             onSubmitEditing={(type, content) => this._sendMessage(type, content)}
             messageContent={messageContent}
             textChange={this._changeText.bind(this)}
+            onSelectionChange={this.selectionChange}
             onContentSizeChange={this._onContentSizeChange.bind(this)}
             xHeight={xHeight}
             onFocus={this._onFocus}

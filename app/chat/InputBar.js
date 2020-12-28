@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent } from "react"
 import {
   PanResponder,
   Platform,
@@ -9,15 +9,15 @@ import {
   TextInput,
   Text,
   Dimensions,
-} from "react-native";
+} from "react-native"
 
-const { width, height } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window")
 
 export default class InputBar extends PureComponent {
   constructor(props) {
-    super(props);
-    this.createPanResponder();
-    this.inputHeight = 0;
+    super(props)
+    this.createPanResponder()
+    this.inputHeight = 0
   }
 
   createPanResponder() {
@@ -32,49 +32,50 @@ export default class InputBar extends PureComponent {
       onPanResponderRelease: (e, gestureState) => this.onPanResponderRelease(e, gestureState),
       onPanResponderTerminate: (e, gestureState) => null,
       onShouldBlockNativeResponder: (e, gestureState) => true,
-    });
+    })
   }
 
   onPanResponderGrant(e, gestureState) {
-    const { showVoice, voiceStart } = this.props;
+    const { showVoice, voiceStart } = this.props
     if (showVoice) {
-      voiceStart();
+      voiceStart()
     }
   }
   onPanResponderMove(e, gestureState) {
-    const { showVoice, voiceStatus, changeVoiceStatus, rootHeight } = this.props;
+    const { showVoice, voiceStatus, changeVoiceStatus, rootHeight } = this.props
     if (showVoice) {
-      const compare = Platform.OS === "ios" ? height - this.inputHeight : rootHeight;
+      const compare = Platform.OS === "ios" ? height - this.inputHeight : rootHeight
       if (e.nativeEvent.pageY < compare) {
-        if (!voiceStatus) return undefined;
-        changeVoiceStatus(false);
+        if (!voiceStatus) return undefined
+        changeVoiceStatus(false)
       } else {
-        if (voiceStatus) return undefined;
-        changeVoiceStatus(true);
+        if (voiceStatus) return undefined
+        changeVoiceStatus(true)
       }
     }
   }
   onPanResponderRelease(e, gestureState) {
-    const { showVoice, voiceEnd } = this.props;
+    const { showVoice, voiceEnd } = this.props
     if (showVoice) {
-      voiceEnd();
+      voiceEnd()
     }
   }
 
   renderIcon = () => {
-    const { sendIcon, plusIcon, usePlus, messageContent, sendUnableIcon } = this.props;
+    const { sendIcon, plusIcon, usePlus, messageContent, sendUnableIcon } = this.props
     if (usePlus) {
-      return messageContent.trim().length ? sendIcon : plusIcon;
+      return messageContent.trim().length ? sendIcon : plusIcon
     } else {
-      return messageContent.trim().length ? sendIcon : sendUnableIcon;
+      return messageContent.trim().length ? sendIcon : sendUnableIcon
     }
-  };
+  }
 
   render() {
     const {
       messageContent,
       onSubmitEditing = () => {},
       textChange = () => {},
+      onSelectionChange = () => {},
       onMethodChange = () => {},
       onContentSizeChange = () => {},
       showVoice,
@@ -97,20 +98,20 @@ export default class InputBar extends PureComponent {
       onFocus,
       isEmojiShow,
       isIphoneX,
-    } = this.props;
+    } = this.props
     const enabled = (() => {
       if (Platform.OS === "android") {
         if (isPanelShow) {
-          return true;
+          return true
         }
         if (isEmojiShow) {
-          return true;
+          return true
         }
-        return false;
+        return false
       } else {
-        return false;
+        return false
       }
-    })();
+    })()
     return (
       <Animated.View
         style={[
@@ -182,7 +183,7 @@ export default class InputBar extends PureComponent {
                 disabled={!enabled}
                 activeOpacity={1}
                 onPress={() => {
-                  onFocus();
+                  onFocus()
                 }}
               >
                 <TextInput
@@ -195,6 +196,7 @@ export default class InputBar extends PureComponent {
                   onContentSizeChange={onContentSizeChange}
                   underlineColorAndroid="transparent"
                   onChangeText={textChange}
+                  onSelectionChange={onSelectionChange}
                   value={messageContent}
                   style={[
                     styles.commentBar__input,
@@ -219,12 +221,12 @@ export default class InputBar extends PureComponent {
               style={{ marginLeft: 8 }}
               onPress={() => {
                 if (messageContent.trim().length > 0) {
-                  onSubmitEditing("text", messageContent);
+                  onSubmitEditing("text", messageContent)
                 } else {
                   if (usePlus) {
-                    isShowPanel(!isPanelShow);
+                    isShowPanel(!isPanelShow)
                   } else {
-                    return null;
+                    return null
                   }
                 }
               }}
@@ -235,7 +237,7 @@ export default class InputBar extends PureComponent {
           </View>
         </View>
       </Animated.View>
-    );
+    )
   }
 }
 
@@ -255,4 +257,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     // backgroundColor: '#f9f9f9'
   },
-});
+})
