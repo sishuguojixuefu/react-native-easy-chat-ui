@@ -630,6 +630,7 @@ class ChatWindow extends PureComponent {
     // 1. 监听到输入的是 @，调用 this.props.onInputAt()，在 onInput 中跳转到新页面
     const inputValue = this.state.messageContent
     this.oldInputValue = inputValue
+    this.newInputValue = text
     const isAdd = text.length > inputValue.length
     if (chatType === "group" && isAdd) {
       this.optType = "add"
